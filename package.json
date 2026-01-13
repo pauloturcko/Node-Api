@@ -7,7 +7,10 @@
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "typeorm": "typeorm-ts-node-commonjs",
+    "migration:create": "cross-env npm_config_name=my_migration_name npm run typeorm migration:create -- ./src/db/migrations/%npm_config_name%",
+    "migration:run": "tsc && npm run typeorm migration:run -- -d ./dist/db/config/data-source.js"
   },
   "keywords": [],
   "author": "",
@@ -16,12 +19,16 @@
     "bcrypt": "^6.0.0",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
+    "pg": "^8.16.3",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.28",
     "zod": "^4.3.4"
   },
   "devDependencies": {
     "@types/bcrypt": "^6.0.0",
     "@types/express": "^5.0.6",
     "@types/node": "^25.0.3",
+    "cross-env": "^10.1.0",
     "ts-node-dev": "^2.0.0",
     "tsx": "^4.21.0"
   }
