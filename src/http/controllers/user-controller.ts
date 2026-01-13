@@ -1,34 +1,40 @@
 import type { Request, Response } from "express";
-import {registerValidator} from '../validators/register-validator.js'
+import { registerValidator } from "../validators/register-validator.js";
 import { ZodError } from "zod";
 import { hashPassword } from "../../utils/hash-password.js";
+import { UserRepository } from "../../db/repositories/user-repository.js";
 
+export class UserController {
+  private userRepository: UserRepository;
 
-export class UserController{
-    async register(req: Request, res: Response) {
-        try{
-            const data = registerValidator.parse(req.body)
-            const password = data.password
+  constructor() {
+    this.userRepository = new UserRepository();
+  }
 
-            const hashedPassword = await hashPassword(password)
+  async register(req: Request, res: Response) {
+    try {
+      const { email, password, name } = registerValidator.parse(req.body);
 
-            console.log({password})
-            console.log({hashedPassword})
+      const hashedPassword = await hashPassword(password);
 
-        
-            res.status(201).json({
-            message: "User OK"
-        })
-        } catch (error) {
-            if(error instanceof ZodError) {
-                res.status(400).json({
-            errors: error
-            })
-            } else {
-                res.status(500).json(
-                    {error}
-                )
-            }
-        }
+      const createdUser = await this.userRepository.create({
+        email: email,
+        password: hashedPassword,
+        name: name,
+      });
+
+      res.status(201).json({
+        message: "User OK",
+        createdUser,
+      });
+    } catch (error) {
+      if (error instanceof ZodError) {
+        res.status(400).json({
+          errors: error,
+        });
+      } else {
+        res.status(500).json({ error });
+      }
     }
+  }
 }
