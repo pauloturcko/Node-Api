@@ -26,4 +26,12 @@ export class UserRepository {
       },
     });
   }
+
+  async loadById(id: number): Promise<User | null> {
+    return await this.repository.findOne({
+      where: {
+        id,
+      },
+    });
+  }
 }
