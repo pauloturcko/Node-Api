@@ -45,4 +45,27 @@ export class UserController {
       }
     }
   }
+
+  async getLoggedUser(req: Request, res: Response) {
+    const { user } = req;
+    if (!user) {
+      res.status(401).json({ message: "Unauthorized" });
+      return;
+    }
+
+    const savedUser = await this.userRepository.loadById(user.id);
+
+    if (!savedUser) {
+      res.status(401).json({ message: "Unauthorized" });
+      return;
+    }
+
+    res.status(200).json({
+      id: savedUser.id,
+      name: savedUser.name,
+      email: savedUser.email,
+      createdAt: savedUser.createdAt,
+      profilePicture: savedUser.profilePicture,
+    });
+  }
 }
