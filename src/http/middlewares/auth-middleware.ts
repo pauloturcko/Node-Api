@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from "express";
 import { verifyToken } from "../../utils/jwt.js";
-import { UserRepository } from "../../db/repositories/user-repository.js";
+import { UserRepository } from "../../db/repositories/users/index.js";
 
 export const authMiddleware = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   const authHeader = req.headers.authorization;
   if (!authHeader) {

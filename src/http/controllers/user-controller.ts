@@ -2,7 +2,7 @@ import type { Request, Response } from "express";
 import { registerValidator } from "../validators/register-validator.js";
 import { ZodError } from "zod";
 import { hashPassword } from "../../utils/hash-password.js";
-import { UserRepository } from "../../db/repositories/user-repository.js";
+import { UserRepository } from "../../db/repositories/users";
 
 export class UserController {
   private userRepository: UserRepository;

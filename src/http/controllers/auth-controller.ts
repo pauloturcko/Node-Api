@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { UserRepository } from "../../db/repositories/user-repository.js";
+import { UserRepository } from "../../db/repositories/users";
 import { authenticateValidator } from "../validators/authenticate-validator.js";
 import { ZodError } from "zod";
 import { verifyPassword } from "../../utils/hash-password.js";
