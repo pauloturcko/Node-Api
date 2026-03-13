@@ -2,6 +2,7 @@ import { Repository } from "typeorm";
 import { Post } from "../../models/post";
 import { appDataSource } from "../../config/data-source";
 import { CreatePostDTO } from "./dtos/create-post-dto";
+import { UpdatePostDto } from "./dtos/update-post-dto";
 
 export class PostsRepository {
   private repository: Repository<Post>;
@@ -14,11 +15,19 @@ export class PostsRepository {
     return await this.repository.find();
   }
 
+  async loadById(id: number): Promise<Post | null> {
+    return await this.repository.findOne({
+      where: {
+        id,
+      },
+    });
+  }
+
   async create(data: CreatePostDTO): Promise<Post> {
     return await this.repository.save(data);
   }
 
-  async update(postId: number, data: CreatePostDTO): Promise<Post> {
+  async update(postId: number, data: UpdatePostDto): Promise<Post> {
     return await this.repository.save({
       id: postId,
       ...data,
