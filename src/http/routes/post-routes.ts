@@ -21,4 +21,8 @@ postRouter.delete("/posts/:id", authMiddleware, (req, res) =>
   postsController.delete(req, res),
 );
 
+postRouter.post("/posts/:id/like", authMiddleware, (req, res) =>
+  postsController.likePost(req, res),
+);
+
 export { postRouter };
