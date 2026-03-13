@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -13,21 +14,22 @@ export class Post {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ name: "author_id" })
+  @Column({ name: "author_id", type: "int" })
   authorId: number;
 
-  @Column()
+  @Column({ type: "varchar" })
   content: string;
 
-  @Column()
+  @Column({ type: "varchar" })
   image?: string;
 
-  @CreateDateColumn({ name: "created_at" })
+  @CreateDateColumn({ name: "created_at", type: "timestamp" })
   createdAt: Date;
 
-  @UpdateDateColumn({ name: "updated_at" })
+  @UpdateDateColumn({ name: "updated_at", type: "timestamp" })
   updatedAt: Date;
 
-  @ManyToOne(() => User, (user) => user.posts, {})
+  @ManyToOne(() => User, (user) => user.posts)
+  @JoinColumn({ name: "author_id" })
   author: User;
 }
