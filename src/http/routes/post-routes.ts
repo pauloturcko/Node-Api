@@ -25,4 +25,8 @@ postRouter.post("/posts/:id/like", authMiddleware, (req, res) =>
   postsController.likePost(req, res),
 );
 
+postRouter.post("/posts/:id/unlike", authMiddleware, (req, res) =>
+  postsController.unlikePost(req, res),
+);
+
 export { postRouter };

@@ -23,6 +23,7 @@ export class PostsRepository {
       where: {
         id,
       },
+      relations: ["comments"],
     });
   }
 
