@@ -1,7 +1,12 @@
 import "reflect-metadata";
 import express from "express";
 import dotenv from "dotenv";
-import { authRouter, postRouter, userRouter } from "./http/routes";
+import {
+  authRouter,
+  commentsRouter,
+  postRouter,
+  userRouter,
+} from "./http/routes";
 
 import { appDataSource } from "./db/config/data-source.js";
 dotenv.config();
@@ -12,6 +17,7 @@ app.use(express.json());
 app.use(userRouter);
 app.use(authRouter);
 app.use(postRouter);
+app.use(commentsRouter);
 
 app.get("/", (req, res) => {
   res.json({
