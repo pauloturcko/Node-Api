@@ -2,6 +2,7 @@ import { Repository } from "typeorm";
 import { Comment } from "../../models/comment";
 import { appDataSource } from "../../config/data-source";
 import { CreateCommentDTO } from "./dtos/create-comment-dto";
+import { EditCommentDTO } from "./dtos/edit-comment-dto";
 
 export class CommentsRepository {
   private repository: Repository<Comment>;
@@ -12,5 +13,28 @@ export class CommentsRepository {
 
   async create(data: CreateCommentDTO): Promise<Comment> {
     return await this.repository.save(data);
+  }
+
+  async loadCommentById(commentId: number): Promise<Comment | null> {
+    return await this.repository.findOne({
+      where: {
+        id: commentId,
+      },
+      relations: ["post"],
+    });
+  }
+
+  async updateComment(
+    commentId: number,
+    data: EditCommentDTO,
+  ): Promise<Comment> {
+    return await this.repository.save({
+      id: commentId,
+      ...data,
+    });
+  }
+
+  async delete(commentId: number): Promise<void> {
+    await this.repository.delete({ id: commentId });
   }
 }
