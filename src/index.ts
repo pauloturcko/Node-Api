@@ -6,9 +6,10 @@ import {
   commentsRouter,
   postRouter,
   userRouter,
+  followsRouter,
 } from "./http/routes";
 
-import { appDataSource } from "./db/config/data-source.js";
+import { appDataSource } from "./db/config/data-source";
 dotenv.config();
 
 const app = express();
@@ -18,6 +19,7 @@ app.use(userRouter);
 app.use(authRouter);
 app.use(postRouter);
 app.use(commentsRouter);
+app.use(followsRouter);
 
 app.get("/", (req, res) => {
   res.json({
