@@ -9,6 +9,7 @@ import {
 import { Post } from "./post";
 import { PostLike } from "./post-like";
 import { Comment } from "./comment";
+import { Follow } from "./follow";
 
 @Entity("users")
 export class User {
@@ -42,4 +43,10 @@ export class User {
 
   @OneToMany(() => Comment, (comment) => comment.user)
   comments: Comment[];
+
+  @OneToMany(() => Follow, (follow) => follow.following)
+  followers: Follow[];
+
+  @OneToMany(() => Follow, (follow) => follow.follower)
+  following: Follow[];
 }
