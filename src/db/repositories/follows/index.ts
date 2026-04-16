@@ -27,4 +27,25 @@ export class FollowsRepository {
       },
     });
   }
+
+  async deleteFollow(followerId: number, followingId: number): Promise<void> {
+    await this.repository.delete({
+      followerId,
+      followingId,
+    });
+  }
+
+  async loadFollowers(userId: number): Promise<Follow[]> {
+    return this.repository.find({
+      where: { followingId: userId },
+      relations: ["follower"],
+    });
+  }
+
+  async loadFollowing(userId: number): Promise<Follow[]> {
+    return this.repository.find({
+      where: { followerId: userId },
+      relations: ["following"],
+    });
+  }
 }
